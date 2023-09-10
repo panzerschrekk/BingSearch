@@ -4,6 +4,7 @@
 FileDelete "twords*.txt" ;Delete temporary word lists
 Result := MsgBox("Would you like to re-download all the word lists? (words.txt will be deleted!)",, "YesNo")
 if Result = "Yes"
+{
 	FileDelete "words.txt" ;Delete before downloading new files
 
 	;German word list
@@ -25,11 +26,12 @@ if Result = "Yes"
 	FileAppend FileRead("twords7.txt"), "words.txt"
 	FileDelete "twords*.txt" ;Delete temporary word lists
 
-Text := FileRead("words.txt")
+	Text := FileRead("words.txt")
 
-oText := StrSplit(Text, "`n")
+	oText := StrSplit(Text, "`n")
 
-oMaxItems := oText.Length
+	oMaxItems := oText.Length
+}
 
 Loop 11
 {
