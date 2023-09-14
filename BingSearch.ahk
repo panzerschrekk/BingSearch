@@ -1,9 +1,12 @@
 ; AutoHotkey v2 script to download word list from github and then start bing searches from ten randomly choosen words
 ; Remove the comment symbol depending on which list you want to use
 
+Run "msedge.exe --no-startup-window"
+
 FileDelete "twords*.txt" ;Delete temporary word lists
-Result := MsgBox("Would you like to re-download all the word lists? (words.txt will be deleted!)",, "YesNo")
-if Result = "Yes"
+ReDownload := MsgBox("Would you like to re-download all the word lists? (words.txt will be deleted!)",, "YesNo")
+
+if ReDownload = "Yes"
 {
 	FileDelete "words*.txt" ;Delete before downloading new files
 
@@ -27,16 +30,24 @@ if Result = "Yes"
 	FileDelete "twords*.txt" ;Delete temporary word lists
 }
 
-Text := FileRead("words.txt")
+LoopUsr := InputBox("How often do you want to repeat the search? (Enter number between 1 and 100)", "Amount of searches", "W300 H125", "10")
+LoopInt := Integer(LoopUsr.Value)
 
-oText := StrSplit(Text, "`n")
-
-oMaxItems := oText.Length
-
-Loop 11
+if LoopUsr.Result = "OK"
 {
-	oRandom := Random(1, oMaxItems)
-	Sleep Random(250,990)
-	oOutput := oText.Get(oRandom)
-	RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput
+	Text := FileRead("words.txt")
+
+	oText := StrSplit(Text, "`n")
+
+	oMaxItems := oText.Length
+
+	Loop LoopInt
+	{
+		oRandom := Random(1, oMaxItems)
+		Sleep Random(250,990)
+		oOutput := oText.Get(oRandom)
+		RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput
+	}
+
+	RunWait "microsoft-edge:" . "https://rewards.bing.com"
 }
