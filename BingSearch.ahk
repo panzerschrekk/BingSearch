@@ -41,12 +41,15 @@ if LoopUsr.Result = "OK"
 
 	oMaxItems := oText.Length
 
+	Run "msedge.exe"
+
 	Loop LoopInt
 	{
 		oRandom := Random(1, oMaxItems)
 		Sleep Random(250,990)
 		oOutput := oText.Get(oRandom)
-		RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput
+		oForm := Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90))
+		RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput . "&form=" . oForm
 	}
 
 	RunWait "microsoft-edge:" . "https://rewards.bing.com"
