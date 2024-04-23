@@ -30,10 +30,13 @@ if ReDownload = "Yes"
 	FileDelete "twords*.txt" ;Delete temporary word lists
 }
 
-LoopUsr := InputBox("How often do you want to repeat the search? (Enter number between 1 and 100)", "Amount of searches", "W300 H125", "10")
+LoopUsr := InputBox("How often do you want to repeat the search? (Enter number between 1 and 100)", "Amount of searches", "W300 H125", "30")
 LoopInt := Integer(LoopUsr.Value)
 
-if LoopUsr.Result = "OK"
+TimeoutUsr := InputBox("What is the timeout in ms? (Enter number between 1000 and 999999)", "Timeout", "W300 H125", "15000")
+TimeoutInt := Integer(TimeoutUsr.Value)
+
+if LoopUsr.Result = "OK" && TimeoutUsr.Result = "OK"
 {
 	Text := FileRead("words.txt")
 
@@ -41,16 +44,16 @@ if LoopUsr.Result = "OK"
 
 	oMaxItems := oText.Length
 
-	Run "msedge.exe"
+	RunWait "microsoft-edge:" . "https://rewards.bing.com/pointsbreakdown"
 
 	Loop LoopInt
 	{
 		oRandom := Random(1, oMaxItems)
-		Sleep Random(250,990)
 		oOutput := oText.Get(oRandom)
 		oForm := Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90))
+		Sleep TimeoutInt
+		Sleep Random(1,1000)
 		RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput . "&form=" . oForm
 	}
 
-	RunWait "microsoft-edge:" . "https://rewards.bing.com"
 }
