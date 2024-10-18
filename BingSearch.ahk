@@ -3,6 +3,8 @@
 
 Run "msedge.exe --no-startup-window"
 
+SetKeyDelay 50
+
 FileDelete "twords*.txt" ;Delete temporary word lists
 ReDownload := MsgBox("Would you like to re-download all the word lists? (words.txt will be deleted!)",, "YesNo")
 
@@ -50,10 +52,20 @@ if LoopUsr.Result = "OK" && TimeoutUsr.Result = "OK"
 	{
 		oRandom := Random(1, oMaxItems)
 		oOutput := oText.Get(oRandom)
-		oForm := Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90))
 		Sleep TimeoutInt
-		Sleep Random(1,1000)
-		RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput . "&form=" . oForm
+		Sleep Random(500,1000)
+		;Variation1 with RunWait
+		RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput
+		;Variation2 with RunWait and Form
+		;oForm := Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90))
+		;RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput . "&form=" . oForm
+		;Variation3 manual Input
+		;WinExist("ahk_exe msedge.exe")
+		;WinActivate("ahk_exe msedge.exe")
+		;Send "^t"
+		;Send "{Text}" oOutput
+		;Send "{Enter}"
+		;Sleep Random(1000,2000)
+		;Send "{PgDn 4}{PgUp 1}{End 4}"
 	}
-
 }
