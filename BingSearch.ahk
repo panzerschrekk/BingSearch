@@ -35,8 +35,8 @@ if ReDownload = "Yes"
 LoopUsr := InputBox("How often do you want to repeat the search? (Enter number between 1 and 100)", "Amount of searches", "W300 H125", "30")
 LoopInt := Integer(LoopUsr.Value)
 
-TimeoutUsr := InputBox("What is the timeout in ms? (Enter number between 1000 and 999999)", "Timeout", "W300 H125", "15000")
-TimeoutInt := Integer(TimeoutUsr.Value)
+TimeoutUsr := InputBox("What is the timeout in sec? (Enter number between 1 and 999)", "Timeout", "W300 H125", "30")
+TimeoutInt := Integer(TimeoutUsr.Value)*1000
 
 if LoopUsr.Result = "OK" && TimeoutUsr.Result = "OK"
 {
@@ -55,10 +55,10 @@ if LoopUsr.Result = "OK" && TimeoutUsr.Result = "OK"
 		Sleep TimeoutInt
 		Sleep Random(500,1000)
 		;Variation1 with RunWait
-		RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput
+		;RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput
 		;Variation2 with RunWait and Form
-		;oForm := Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90))
-		;RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput . "&form=" . oForm
+		oForm := Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90)) . Chr(Random(65,90)) . Random(0,9)
+		RunWait "microsoft-edge:" . "https://www.bing.com/search?q=" . oOutput . "&FORM=" . oForm
 		;Variation3 manual Input
 		;WinExist("ahk_exe msedge.exe")
 		;WinActivate("ahk_exe msedge.exe")
